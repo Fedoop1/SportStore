@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Sport Store Application</title>
+    <link rel="stylesheet" href="lib/twitter-bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="bg-dark text-white p-2">
+    <span class="navbar-brand m-2">Sport Store</span>
+</div>
+<div class="row m-1 p-1">
+    <div id="categories" class="col-3"></div>
+</div>
+<div class="col-9">
+    @RenderBody()
+</div>
+<footer class="border-top modal-footer text-muted">
+    <div class="container">
+        &copy; 2021 SportStore <a asp-controller="Store" asp-action="Privacy">Privacy</a>
+    </div>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("script", required:false)
+</footer>
+</body>
+</html>

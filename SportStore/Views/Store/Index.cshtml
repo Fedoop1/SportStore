@@ -1,0 +1,15 @@
+﻿@model ProductsListViewModel
+
+@{
+    ViewData["Title"] = "Shop Index Page";
+}
+
+@foreach (var product in Model.Products)
+{
+    @Html.Partial("ProductSummary", model: product);
+}
+
+<div page-model="@Model.PagingInfo" page-action="Index" page-controller="Store"
+     page-classes-enabled="true" page-classes="btn" page-classes-normal="btn-outline-dart"
+     page-classes-selected="btn-primary" class="btn-group m-1">
+</div>
