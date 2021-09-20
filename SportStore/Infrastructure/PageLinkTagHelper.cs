@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -12,6 +13,9 @@ namespace SportStore.Infrastructure
     public class PageLinkTagHelper : TagHelper
     {
         private readonly IUrlHelperFactory urlHelperFactory;
+
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new();
 
         public PageLinkTagHelper(IUrlHelperFactory helperFactory) => this.urlHelperFactory =
             helperFactory ??
@@ -36,9 +40,10 @@ namespace SportStore.Infrastructure
             for (int index = 1; index <= PageModel.TotalPages; index++)
             {
                 TagBuilder tag = new TagBuilder("a");
+                PageUrlValues["productPage"] = index;
 
                 tag.Attributes["href"] = urlHelper.Action(action: PageAction,
-                    new {pageIndex = index});
+                    PageUrlValues);
 
                 if (PageClassesEnabled)
                 {

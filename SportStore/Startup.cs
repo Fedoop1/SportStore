@@ -21,6 +21,7 @@ namespace SportStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
 
             services.AddScoped<IStoreRepository, StoreRepository>();
 
@@ -47,6 +48,8 @@ namespace SportStore
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
+
+            app.UseSession();
 
             app.UseRouting();
 

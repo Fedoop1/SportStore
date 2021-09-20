@@ -1,0 +1,38 @@
+﻿@model CartViewModel
+
+@{
+    Layout = "_CartLayout";
+}
+
+<h3>Your cart</h3>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in @Model.Cart.CartLines)
+    {
+        <tr>
+            <td>@item.Product.Name</td>
+            <td>@item.Quantity</td>
+            <td>@item.Product.Price</td>
+            <td>@((item.Product.Price * item.Quantity).ToString("C"))</td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">Total:</td>
+        <td>@Model.Cart.ComputeTotalValue().ToString("C")</td>
+    </tr>
+    </tfoot>
+</table>
+
+<div  class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+</div>
