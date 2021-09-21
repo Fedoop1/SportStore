@@ -1,0 +1,55 @@
+﻿@model Order
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Order page";
+}
+
+<h2>Checkout now</h2>
+<p>Please enter you details, and we will ship your goods right away!</p>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-controller="Order" asp-action="Checkout" method="post">
+    <h3>Ship to:</h3>
+    <div class="form-control">
+        <label asp-for="Name"class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <h3>Address:</h3>
+    <div class="form-control">
+        <label asp-for="Line1" class="form-label"></label>
+        <input asp-for="Line1" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Line2" class="form-label"></label>
+        <input asp-for="Line2" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Line3" class="form-label"></label>
+        <input asp-for="Line3" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="City" class="form-label"></label>
+        <input asp-for="City" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="State" class="form-label"></label>
+        <input asp-for="State" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Zip" class="form-label"></label>
+        <input asp-for="Zip" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Country" class="form-label"></label>
+        <input asp-for="Country" class="form-control" />
+    </div>
+    <h3>Options:</h3>
+    <div class="form-check">
+        <label asp-for="GiftWarp" class="form-label"></label>
+        <input asp-for="GiftWarp" class="form-control"/>
+    </div>
+    <div class="text-center">
+        <button type="submit" value="Complete Order" class="btn btn-success">Complete Order</button>
+    </div>
+</form>

@@ -2,7 +2,7 @@
 {
     public class CartViewModel
     {
-        public Cart Cart { get; set; }
+        public CartBase Cart { get; set; }
         public string ReturnUrl { get; set; }
     }
 }

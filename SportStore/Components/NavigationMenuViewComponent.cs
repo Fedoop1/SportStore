@@ -6,9 +6,9 @@ namespace SportStore.Components
 {
     public class NavigationMenuViewComponent : ViewComponent
     {
-        private readonly IStoreRepository repository;
+        private readonly IProductRepository repository;
 
-        public NavigationMenuViewComponent(IStoreRepository repository) => this.repository = repository;
+        public NavigationMenuViewComponent(IProductRepository repository) => this.repository = repository;
 
         public IViewComponentResult Invoke()
         {

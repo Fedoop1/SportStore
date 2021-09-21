@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SportStore.Infrastructure;
 using SportStore.Models;
 using SportStore.Models.Repo;
 using SportStore.Models.ViewModels;
@@ -9,22 +9,26 @@ namespace SportStore.Controllers
 {
     public class CartController : Controller
     {
-        private readonly IStoreRepository repository;
-        public CartController(IStoreRepository repository) => this.repository = repository;
+        private readonly IProductRepository repository;
+        private readonly CartBase cartService;
+        public CartController(IProductRepository repository, CartBase cartService) => (this.repository, this.cartService) = (repository, cartService);
 
         [HttpGet]
-        public IActionResult Index(string returnUrl) => View(new CartViewModel()
-            {Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart(), ReturnUrl = returnUrl ?? "/"});
+        public IActionResult Index(string returnUrl) => View(new CartViewModel() {Cart = cartService, ReturnUrl = returnUrl ?? "/"});
 
         [HttpPost]
-        public async Task<IActionResult> Index(int productId, string returnUrl)
+        public IActionResult Index(int productId, string returnUrl)
         {
-            var product = await this.repository.Products.FindAsync(productId);
-            var cart = this.HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-            cart.AddItem(product, 1);
-            HttpContext.Session.SetJson("cart", cart);
+            var product = this.repository.Products.FirstOrDefault(x => x.ProductId == productId);
+            this.cartService.AddItem(product, 1);
+            return View(new CartViewModel() {Cart = cartService, ReturnUrl = returnUrl});
+        }
 
-            return View(new CartViewModel() {Cart = cart, ReturnUrl = returnUrl});
+        [HttpPost]
+        public IActionResult Remove(int productId, string returnUrl)
+        {
+            cartService.RemoveLine(this.cartService.CartLines.First(x => x.Product.ProductId == productId).Product);
+            return RedirectToAction("Index", new {returnUrl = returnUrl ?? "/"});
         }
     }
 }

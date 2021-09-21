@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,14 +24,16 @@ namespace SportStore
             services.AddControllersWithViews();
             services.AddSession();
 
-            services.AddScoped<IStoreRepository, StoreRepository>();
-
             services.AddDbContext<StoreDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
-
                 options.UseLoggerFactory(LoggerFactory.Create(configure => configure.AddConsole()));
             });
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<CartBase>(SessionCart.GetCart);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width", initial-scale="1.0" />
     <title>@ViewBag.Title - Sport Store Application</title>
     <link rel="stylesheet" href="lib/twitter-bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="lib/css/site.css"/>
 </head>
 <body>
 <header>
@@ -18,7 +19,7 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-white" asp-controller="Cart" asp-action="Index" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">Cart</a>
+                        <vc:cart-summary></vc:cart-summary>
                     </li>
                 </ul>
             </div>
@@ -30,8 +31,10 @@
         <vc:navigation-menu></vc:navigation-menu>
     </div>
 </div>
-<div class="col-9">
-    @RenderBody()
+<div class="container pb-3">
+    <main>
+        @RenderBody()
+    </main>
 </div>
 <footer class="border-top modal-footer text-muted">
     <div class="container">

@@ -1,0 +1,18 @@
+﻿@using SportStore.Infrastructure
+@model CartBase
+
+<div>
+    @if (Model.CartLines.Any())
+    {
+        <small class="navbar-text">
+            <b>Your cart:</b>
+            @Model.CartLines.Sum(x => x.Quantity) item(s)
+            Total: @Model.ComputeTotalValue().ToString("C")
+            
+        </small>
+    }
+    <a class="btn btn-sm btn-secondary" asp-controller="Cart" asp-action="Index" 
+       asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+        <i class="fa fa-shopping-cart">Cart</i>
+    </a>
+</div>

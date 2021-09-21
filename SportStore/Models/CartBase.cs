@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace SportStore.Models
 {
-    public class Cart
+    public class CartBase
     {
         public List<CartLine> CartLines { get; set; } = new();
 
-        public void AddItem(Product product, int quantity)
+        public virtual void AddItem(Product product, int quantity)
         {
             var cartLine = CartLines.FirstOrDefault(p => p.Product.ProductId == product.ProductId);
             if (cartLine is not null)
@@ -20,7 +20,7 @@ namespace SportStore.Models
             CartLines.Add(new CartLine() { Product = product, Quantity = quantity });
         }
 
-        public void RemoveLine(Product product)
+        public virtual void RemoveLine(Product product)
         {
             if (product is null)
             {
@@ -29,7 +29,8 @@ namespace SportStore.Models
 
             CartLines.RemoveAll(cartLine => cartLine.Product.ProductId == product.ProductId);
         }
+        public virtual void Clear() => this.CartLines.Clear();
         public decimal ComputeTotalValue() => CartLines.Sum(x => x.Product.Price * x.Quantity);
-        public void Clear() => this.CartLines.Clear();
+        
     }
 }

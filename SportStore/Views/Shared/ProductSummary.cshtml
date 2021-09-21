@@ -1,4 +1,5 @@
 ﻿@using SportStore.Infrastructure
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Product
 
 <div class="card m-1 p-1">
@@ -17,7 +18,21 @@
             @Model.Description
         </span>
         <div class="container">
-            <button type="submit" value="Add to cart" class="btn btn-success btn-sm" style="float: right"></button>
+            <button type="submit" onclick="AddProductToCart(@Model.ProductId)" class="btn btn-success btn-sm" style="float: right">Add</button>
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+    function AddProductToCart(id) {
+        $.ajax(type = "POST",
+            url = "cart/",
+            data = {id, @ViewContext.HttpContext.Request.PathAndQuery()},
+            contentType = "application/json; charset=utf-8",
+            dataType = "json",
+            async = true,
+            fail = function() {
+                alert("Failed :(");
+            })};
+    }
+</script>
