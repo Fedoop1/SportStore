@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace SportStore.Models
 {
     public class Order
     {
-        [BindNever]
         public int OrderId { get; set; }
 
         [Required(ErrorMessage = "Please, enter a name")]
@@ -26,7 +24,9 @@ namespace SportStore.Models
         public bool GiftWarp { get; set; }
 
         [BindNever]
-        [NotMapped]
-        public virtual ICollection<CartLine> Lines { get; set; }
+        public bool Snipped { get; set; }
+
+        [BindNever]
+        public virtual ICollection<CartLine> Lines { get; set; } = new HashSet<CartLine>();
     }
 }

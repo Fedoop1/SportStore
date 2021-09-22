@@ -13,6 +13,7 @@ namespace SportStore.Models
         {
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Order>().ToTable("Order");
+            modelBuilder.Entity<CartLine>().ToTable("CartLine");
 
             modelBuilder.Entity<Product>()
                 .Property(x => x.Price)
@@ -21,5 +22,6 @@ namespace SportStore.Models
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<CartLine> CartLines { get; set; }
     }
 }

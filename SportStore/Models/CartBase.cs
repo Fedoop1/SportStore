@@ -10,23 +10,18 @@ namespace SportStore.Models
 
         public virtual void AddItem(Product product, int quantity)
         {
-            var cartLine = CartLines.FirstOrDefault(p => p.Product.ProductId == product.ProductId);
+            var cartLine = CartLines.FirstOrDefault(p => p.ProductId == product.ProductId);
             if (cartLine is not null)
             {
                 cartLine.Quantity += quantity;
                 return;
             }
 
-            CartLines.Add(new CartLine() { Product = product, Quantity = quantity });
+            CartLines.Add(new CartLine() { ProductId = product.ProductId, Product = product, Quantity = quantity});
         }
 
         public virtual void RemoveLine(Product product)
         {
-            if (product is null)
-            {
-                throw new ArgumentNullException(nameof(product), "Product can't be null");
-            }
-
             CartLines.RemoveAll(cartLine => cartLine.Product.ProductId == product.ProductId);
         }
         public virtual void Clear() => this.CartLines.Clear();

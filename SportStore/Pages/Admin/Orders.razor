@@ -1,0 +1,36 @@
+﻿@page "/admin/orders"
+
+@using SportStore.Models.Repo
+@inherits OwningComponentBase<SportStore.Models.Repo.IOrderRepository>
+
+<OrderTable TableTitle="Unshipped Orders" Orders="UnshippedOrders" ButtonLabel="Ship" OrderSelected="ShipOrder"/>
+<OrderTable TableTitle="Shipped Orders" Orders="ShippedOrders" ButtonLabel="Reset" OrderSelected="ResetOrder"/>
+<button class="btn btn-info" @onclick="@(e => UpdateData())">Refresh Data</button>
+
+@code
+{
+    public IOrderRepository Repository => Service;
+    public IEnumerable<Order> AllOrders { get; set; }
+    public  IEnumerable<Order> UnshippedOrders { get; set; }
+    public IEnumerable<Order> ShippedOrders { get; set; }
+
+    protected override void OnInitialized() => UpdateData();
+
+    public void UpdateData()
+    {
+        AllOrders = Repository.Orders.ToList();
+        UnshippedOrders = AllOrders.Where(x => x.Snipped == false);
+        ShippedOrders = AllOrders.Where(x => x.Snipped);
+    }
+
+    public void ShipOrder(int id) => UpdateOrder(id, true);
+
+    public void ResetOrder(int id) => UpdateOrder(id, false);
+
+    private void UpdateOrder(int id, bool shipValue)
+    {
+        var order = Repository.Orders.FirstOrDefault(x => x.OrderId == id);
+        order.Snipped = shipValue;
+        Repository.SaveOrder(order);
+    }
+}

@@ -24,13 +24,17 @@ namespace SportStore
             services.AddControllersWithViews();
             services.AddSession();
 
+            services.AddServerSideBlazor();
+            services.AddRazorPages();
+
             services.AddDbContext<StoreDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
-                options.UseLoggerFactory(LoggerFactory.Create(configure => configure.AddConsole()));
+                options.UseLoggerFactory(LoggerFactory.Create(configure =>
+                    configure.AddConsole()));
             });
 
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IStoreRepository, StoreRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<CartBase>(SessionCart.GetCart);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -59,6 +63,10 @@ namespace SportStore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", "{controller=Store}/{action=Index}/{id?}");
+                endpoints.MapBlazorHub();
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
+                endpoints.MapFallbackToPage("/admin/{*catchall}", "/Admin/Index");
             });
         }
     }

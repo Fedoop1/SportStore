@@ -9,9 +9,9 @@ namespace SportStore.Controllers
 {
     public class StoreController : Controller
     {
-        private readonly IProductRepository repository;
+        private readonly IStoreRepository repository;
 
-        public StoreController(IProductRepository repository) => this.repository = repository ??
+        public StoreController(IStoreRepository repository) => this.repository = repository ??
             throw new ArgumentNullException(nameof(repository), "Store repository can't be null");
 
         public IActionResult Index(string category, int pageIndex = 1)

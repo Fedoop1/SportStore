@@ -36,6 +36,7 @@ namespace SportStore.Controllers
 
             try
             {
+                this.cartService.CartLines.ForEach(line => order.Lines.Add(line));
                 await this.repository.SaveOrder(order);
             }
             catch (DbUpdateConcurrencyException)
