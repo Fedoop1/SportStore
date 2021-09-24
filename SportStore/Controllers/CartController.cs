@@ -15,19 +15,12 @@ namespace SportStore.Controllers
         [HttpGet]
         public IActionResult Index(string returnUrl) => View(new CartViewModel() {Cart = cartService, ReturnUrl = returnUrl ?? "/"});
 
-        [HttpPost]
-        public IActionResult Index(int productId, string returnUrl)
+        [HttpGet]
+        public PartialViewResult AddToCart([FromQuery]int productId)
         {
             var product = this.repository.Products.FirstOrDefault(x => x.ProductId == productId);
-            
-            if (product is null)
-            {
-                return BadRequest();
-
-            }
-
             this.cartService.AddItem(product, 1);
-            return View(new CartViewModel() {Cart = cartService, ReturnUrl = returnUrl});
+            return PartialView("Components/CartSummary/Default", cartService);
         }
 
         [HttpPost]

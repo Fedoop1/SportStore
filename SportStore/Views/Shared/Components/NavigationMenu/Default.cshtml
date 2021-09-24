@@ -1,5 +1,5 @@
-﻿@model IEnumerable<string>
-
+﻿@using SportStore.Infrastructure
+@model IEnumerable<string>
 <a class="btn btn-outline-secondary" asp-action="Index" 
    asp-controller="Store" asp-route-category="">Home</a>
 
@@ -8,3 +8,5 @@
     <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary" : "")" asp-action="Index" asp-controller="Store" 
        asp-route-category="@category" asp-route-pageIndex="1">@category</a>
 }
+<a class="btn btn-info" asp-controller="Cart" asp-action="Index" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()" style="margin-left: 1100px">Cart</a>
+

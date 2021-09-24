@@ -17,17 +17,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <vc:cart-summary></vc:cart-summary>
-                    </li>
-                </ul>
+                <div id="cartSummary">
+                    <vc:cart-summary></vc:cart-summary>
+                </div>
             </div>
         </div>
     </nav>
 </header>
 <div class="row m-1 p-1">
-    <div id="categories" class="col-4">
+    <div id="categories" class="col-10">
         <vc:navigation-menu></vc:navigation-menu>
     </div>
 </div>
